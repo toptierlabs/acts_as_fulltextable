@@ -5,6 +5,8 @@
 # 2008-06-19
 #   Fixed a bug, see acts_as_fulltextable.rb
 class FulltextRow < ActiveRecord::Base
+  attr_accessible :fulltextable_type, :fulltextable_id, :value, :parent_id
+
   # If FULLTEXT_ROW_TABLE is set, use it as the table name
   begin
     set_table_name FULLTEXT_ROW_TABLE if Object.const_get('FULLTEXT_ROW_TABLE')

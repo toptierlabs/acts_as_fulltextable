@@ -1,5 +1,5 @@
 require "acts_as_fulltextable/version"
-
+require "fulltext_row"
 
 module ActsAsFulltextable
 	extend ActiveSupport::Concern
@@ -16,11 +16,16 @@ module ActsAsFulltextable
 	    # add/update the FullTextRow. A record returning false that is already in FullTextRow is removed.
 	    #
 	    def acts_as_fulltextable(*attr_names)
+        puts '///////////////////////////'
+        puts attr_names
 	      configuration = { :check_for_changes => true, :parent_id => nil, :conditions => "true" }
 	      configuration.update(attr_names.pop) while attr_names.last.is_a?(Hash)
 	      configuration[:fields] = attr_names.flatten.uniq.compact
-	      write_inheritable_attribute 'fulltext_options', configuration
-	      extend  FulltextableClassMethods
+	      puts 'Going to add act as fields'
+        class_attribute :fulltext_options
+        self.fulltext_options = configuration
+        
+        extend  FulltextableClassMethods
 	      include FulltextableInstanceMethods
 	      self.send('after_create', :create_fulltext_record)
 	      self.send('after_update', :update_fulltext_record)
@@ -29,11 +34,9 @@ module ActsAsFulltextable
   end
   
   module FulltextableClassMethods
-    def fulltext_options
-      read_inheritable_attribute('fulltext_options')
-    end
+    
     def fulltext_fields
-      read_inheritable_attribute('fulltext_options')[:fields]
+      self.fulltext_options[:fields]
     end
 
     # Performs full-text search for objects of this class.
@@ -65,6 +68,11 @@ module ActsAsFulltextable
     # Creates the fulltext_row record for self
     #
     def create_fulltext_record
+      puts '=================='
+      puts self.class.to_s
+      puts self.id
+      puts self.fulltext_value
+      puts self.parent_id_value
       FulltextRow.create(:fulltextable_type => self.class.to_s, :fulltextable_id => self.id, :value => self.fulltext_value, :parent_id => self.parent_id_value) if eval self.class.fulltext_options[:conditions]
     end
     
@@ -88,6 +96,7 @@ module ActsAsFulltextable
         end
         FulltextRow.update_all(["value = ?, parent_id = ?", self.fulltext_value, self.parent_id_value], ["fulltextable_type = ? AND fulltextable_id = ?", self.class.to_s, self.id]) if !(self.class.fulltext_options[:check_for_changes]) || (row.value != self.fulltext_value) || (self.parent_id_value != row.parent_id)
       else
+
         row = FulltextRow.find_by_fulltextable_type_and_fulltextable_id(self.class.to_s, self.id)
         row.destroy unless row.nil?
       end
@@ -96,7 +105,8 @@ module ActsAsFulltextable
     # Returns self's value created by concatenating fulltext fields for its class
     #
     def fulltext_value
-      self.class.fulltext_fields.map {|f| self.send(f)}.join("\n")
+      full_value = self.class.fulltext_fields.map {|f| self.send(f)}.join("\n")
+      full_value
     end
   end
 end

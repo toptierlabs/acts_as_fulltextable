@@ -7,7 +7,7 @@ class CreateFulltextRows < ActiveRecord::Migration
       t.column :parent_id,          :integer
     end
     
-    [<%= models.join(', ') %>].each do |m|
+    [<%= @models.join(', ') %>].each do |m|
       m.find(:all).each {|i| i.create_fulltext_record}
     end
     
