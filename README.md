@@ -1,6 +1,13 @@
 # ActsAsFulltextable
 
-TODO: Write a gem description
+This gem is based on the old Rails 2 plugin made by wonsys (https://github.com/wonsys/acts_as_fulltextable). 
+
+It allows you to create an auxiliary table to be used for full-text searches.
+It behaves like a polymorphic association, so it can be used with any
+ActiveRecord model.
+
+
+It has been tested on Rails 3.1+. Ruby 1.9.1+.
 
 ## Installation
 
@@ -10,7 +17,7 @@ Add this line to your application's Gemfile:
 
 And then execute:
 
-    $ bundle
+    $ bundle install
 
 Or install it yourself as:
 
@@ -18,7 +25,37 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Create a migration for the models that you want to make searches. 
+
+    $ rails generate fulltext_rows model1 model2 model3 ....
+    $ rake db:migrate
+
+
+Add acts_as_fulltextable in any model, followed by the list of searchable fields.
+
+i.e. 
+```ruby 
+
+class Person < ActiveRecord::Base
+  attr_accessible :age, :description, :name
+
+  acts_as_fulltextable :description, :name
+end
+
+```
+
+You can either run a search on a single model:
+  Model.find_fulltext('query to run', :limit => 10, :offset => 0)
+
+Or you can run it on more models at once:
+  FulltextRow.search('query to run', :only => [:only, :this, :models], :limit => 10, :offset => 0)
+
+## Warning
+
+Should you add acts_as_fulltextable to a new model after the initial migration was run,
+you should execute the following piece of code (a migration or script/console are both fine):
+  
+  NewModel.find(:all).each {|i| i.create_fulltext_record}
 
 ## Contributing
 
