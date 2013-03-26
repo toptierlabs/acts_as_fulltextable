@@ -16,13 +16,10 @@ module ActsAsFulltextable
 	    # add/update the FullTextRow. A record returning false that is already in FullTextRow is removed.
 	    #
 	    def acts_as_fulltextable(*attr_names)
-        puts '///////////////////////////'
-        puts attr_names
-	      configuration = { :check_for_changes => true, :parent_id => nil, :conditions => "true" }
+        configuration = { :check_for_changes => true, :parent_id => nil, :conditions => "true" }
 	      configuration.update(attr_names.pop) while attr_names.last.is_a?(Hash)
 	      configuration[:fields] = attr_names.flatten.uniq.compact
-	      puts 'Going to add act as fields'
-        class_attribute :fulltext_options
+	      class_attribute :fulltext_options
         self.fulltext_options = configuration
         
         extend  FulltextableClassMethods
@@ -68,11 +65,6 @@ module ActsAsFulltextable
     # Creates the fulltext_row record for self
     #
     def create_fulltext_record
-      puts '=================='
-      puts self.class.to_s
-      puts self.id
-      puts self.fulltext_value
-      puts self.parent_id_value
       FulltextRow.create(:fulltextable_type => self.class.to_s, :fulltextable_id => self.id, :value => self.fulltext_value, :parent_id => self.parent_id_value) if eval self.class.fulltext_options[:conditions]
     end
     
