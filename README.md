@@ -13,7 +13,7 @@ It has been tested on Rails 3.1+. Ruby 1.9.1+.
 
 Add this line to your application's Gemfile:
 
-    gem 'acts_as_fulltextable', '~> 0.1'
+    gem 'acts_as_fulltextable', '~> 0.1.1'
 
 And then execute:
 
