@@ -1,6 +1,6 @@
 # ActsAsFulltextable
 
-This gem is based on the old Rails 2 plugin made by wonsys (https://github.com/wonsys/acts_as_fulltextable). 
+This gem is based on the old Rails 2 plugin made by boone (https://github.com/boone/acts_as_fulltextable). 
 
 It allows you to create an auxiliary table to be used for full-text searches.
 It behaves like a polymorphic association, so it can be used with any
@@ -21,7 +21,8 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install acts_as_fulltextable
+    $ gem 'acts_as_fulltextable', :git => 'git://github.com/toptierlabs/acts_as_fulltextable.git'
+
 
 ## Usage
 
@@ -55,7 +56,11 @@ Or you can run it on more models at once:
 Should you add acts_as_fulltextable to a new model after the initial migration was run,
 you should execute the following piece of code (a migration or script/console are both fine):
   
+```ruby 
+
   NewModel.find(:all).each {|i| i.create_fulltext_record}
+
+```
 
 ## Contributing
 
