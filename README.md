@@ -1,6 +1,6 @@
 # ActsAsFulltextable
 
-This gem is based on the old Rails 2 plugin made by boone (https://github.com/boone/acts_as_fulltextable). 
+This gem is based on the old Rails 2 plugin made by wonsys (https://github.com/wonsys/acts_as_fulltextable). 
 
 It allows you to create an auxiliary table to be used for full-text searches.
 It behaves like a polymorphic association, so it can be used with any
