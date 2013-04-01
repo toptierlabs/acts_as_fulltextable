@@ -69,3 +69,7 @@ you should execute the following piece of code (a migration or script/console ar
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create new Pull Request
+
+## About the author
+
+TopTier labs. http://www.toptierlabs.com

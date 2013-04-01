@@ -11,12 +11,10 @@ class FulltextRowsGenerator < Rails::Generators::Base
  
   def initialize(*runtime_args)
     super(*runtime_args)
-    #puts @models.to_json
   end
 
   def create_model_migrations
     migration_template("migrate.rb", 'db/migrate/create_fulltext_rows.rb')
-
   end
   
   def self.next_migration_number(path)
