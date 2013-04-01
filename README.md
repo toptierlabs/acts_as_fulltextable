@@ -73,3 +73,7 @@ you should execute the following piece of code (a migration or script/console ar
 ## About the author
 
 TopTier labs. http://www.toptierlabs.com
+
+## Our blog
+
+http://www.toptierlabs.com/blog
