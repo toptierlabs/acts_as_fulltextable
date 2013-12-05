@@ -77,3 +77,7 @@ TopTier labs. http://www.toptierlabs.com
 ## Our blog
 
 http://www.toptierlabs.com/blog
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/toptierlabs/acts_as_fulltextable/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
